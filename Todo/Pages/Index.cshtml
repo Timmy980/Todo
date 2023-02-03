@@ -1,0 +1,22 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-4">Welcome to TodoApp</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Increase your Productivity. Create and manage To-do Lists and easily keep track of your daily tasks and responsibilities.
+        We offer a simple and intuitive solution for managing your to-do lists, allowing you to stay organized and focused on what's important in your life.</p>
+        <div>
+            <a class="btn btn-primary" asp-area="" asp-page="/TodoItems/Index">Get Started</a>
+        
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary" asp-area="" asp-page="/Admin/Index">Manage</a>
+                }    
+        
+        </div>
+    </div>
+</div>

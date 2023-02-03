@@ -1,0 +1,86 @@
+﻿@page
+@model Todo.Pages.TodoItems.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p>
+    <h2>My Todo Items</h2>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+<p>
+    <input type="text" id="myInput" placeholder="Search status or priority">
+</p>
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].CreatedAt)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Priority)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TodoItem) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                    <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    function filterTable() {
+        var filter = event.target.value.toUpperCase();
+        var rows = document.querySelector("#myTable tbody").rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var firstCol = rows[i].cells[3].textContent.toUpperCase();
+            var secondCol = rows[i].cells[4].textContent.toUpperCase();
+            if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+    document.querySelector('#myInput').addEventListener('keyup', filterTable, false);
+
+</script>

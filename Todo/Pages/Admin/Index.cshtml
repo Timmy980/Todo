@@ -1,0 +1,89 @@
+﻿@page
+@model Todo.Pages.Admin.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Manage</h1>
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for user..">
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].CreatedAt)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].Priority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TodoItem[0].User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TodoItem) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Priority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                    <a class="btn btn-primary btn-sm" asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="btn btn-primary btn-sm" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[5];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
